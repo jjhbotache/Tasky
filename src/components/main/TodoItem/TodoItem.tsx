@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Check, Edit2, Trash2 } from "lucide-react";
+import { Edit2, Trash2 } from "lucide-react";
 import TodoItemStyledComponent from './TodoItemStyledComponent';
 
 interface TodoItemProps {
@@ -23,9 +23,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
   completed,
   onEdit,
   onRemove,
-  onSave,
-  onCancel,
-  onChange,
   onToggle,
 }) => {
   return (
