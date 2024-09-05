@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 interface Todo {
   id: number;
   text: string;
+  completed: boolean; // Añadir la propiedad completed
 }
 
 interface EditingState {
@@ -27,7 +28,7 @@ const useTodos = () => {
 
   const addTodo = (text: string) => {
     if (text.trim() === '') return;
-    const newTodoItem: Todo = { id: Date.now(), text };
+    const newTodoItem: Todo = { id: Date.now(), text, completed: false }; // Inicializar completed en false
     setTodos([...todos, newTodoItem]);
   };
 
@@ -44,6 +45,10 @@ const useTodos = () => {
     setEditing({ id: null, text: '' });
   };
 
+  const toggleComplete = (id: number) => {
+    setTodos(todos.map(todo => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)));
+  };
+
   return {
     todos,
     editing,
@@ -52,6 +57,7 @@ const useTodos = () => {
     startEditing,
     submitEdit,
     setEditing,
+    toggleComplete, // Añadir toggleComplete al objeto retornado
   };
 };
 

@@ -1,11 +1,8 @@
-import TodoList from "./components/main/TodoList/TodoList";
+import Main from "./pages/Main";
 
 function App() {
-  return (
-    <div className="App">
-      <TodoList />
-    </div>
-  );
+  // return <h1 className="text-9xl">App</h1>;
+  return <Main />;
 }
 
 export default App;

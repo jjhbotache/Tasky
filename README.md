@@ -16,9 +16,17 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [✅] Implement storage and retrieval of tasks from Session Storage.
 - [✅] Create components for adding, listing, and deleting tasks.
 - [✅] Configure and deploy the application on GitHub Pages.
-- [ ] Add branding colors.
-- [ ] Integrate Material UI.
-- [ ] Make the application responsive.
+- [✅] Add branding colors.
+- [✅] Integrate ~~Material UI~~ shadcn with tailwind.
+- [✅] Make the application responsive.
+- [ ] order edit modal.
+- [ ] order todo function.
+- [ ] schedule function.
+- [ ] settings and tags editor.
+- [ ] autocompletation with Geimini.
+- [ ] autoadd tags.
+
+
 
 ## Technologies Used
 
