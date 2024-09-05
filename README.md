@@ -23,10 +23,13 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [✅] add some animations.
 - [✅] add toasts.
 - [✅] autocompletation with Geimini.
-- [ ] autoadd tags.
-- [ ] order edit modal.
-- [ ] order todo function.
+- [ ] allow completation and more functions in phone.
+- [ ] task edit modal.
+- [ ] order task function.
 - [ ] schedule function.
+
+- [ ] tags crud
+- [ ] autoadd tags from the created.
 - [ ] settings and tags editor.
 - [ ] add themes
 - [ ] add languages
