@@ -6,8 +6,6 @@ import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import TodoListStyledComponent from './TodoStyledComponent';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { log } from 'console';
-import { img } from 'framer-motion/client';
 
 const TodoList: React.FC = () => {
   const {
