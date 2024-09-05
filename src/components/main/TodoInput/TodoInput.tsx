@@ -12,10 +12,8 @@ const TodoInput: React.FC<TodoInputProps> = ({ onAdd }) => {
   const [newTodo, setNewTodo] = useState<string>('');
 
   const handleAdd = () => {
-    if (newTodo.trim() !== '') {
-      onAdd(newTodo);
-      setNewTodo('');
-    }
+    onAdd(newTodo.trim());
+    setNewTodo('');
   };
 
   return (
@@ -28,7 +26,7 @@ const TodoInput: React.FC<TodoInputProps> = ({ onAdd }) => {
         placeholder="Add a new todo"
         className="flex-grow mr-2 bg-gray-100  text-gray-800 rounded-lg focus-visible:outline-none"
       />
-      <Button onClick={handleAdd} className="bg-gray-800 text-white hover:bg-gray-700 rounded-lg addBtn">
+      <Button onClick={handleAdd} className="addBtn">
         <PlusCircle className="h-5 w-5 mr-2" />
         Add
       </Button>
