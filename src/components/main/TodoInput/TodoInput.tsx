@@ -101,8 +101,6 @@ const TodoInput: React.FC<TodoInputProps> = ({ onAdd }) => {
     inputRef.current?.focus();  
   };
 
-
-
   return (
     <TodoInputStyledComponent className="mb-4 flex items-center gap-1">
       <div className='overflow-hidden relative w-full'>
@@ -124,7 +122,7 @@ const TodoInput: React.FC<TodoInputProps> = ({ onAdd }) => {
         </div>
       </div>
       
-      <Button onClick={handleAdd} className="bg-gray-800 text-white hover:bg-gray-700 rounded-lg addBtn">
+      <Button onClick={handleAdd} className="addBtn">
         <PlusCircle className="h-5 w-5 mr-2" />
         Add
       </Button>

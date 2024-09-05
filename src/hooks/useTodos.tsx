@@ -4,16 +4,18 @@ interface Todo {
   id: number;
   text: string;
   completed: boolean;
+  dueDate: string; // Añadir la propiedad dueDate
 }
 
 interface EditingState {
   id: number | null;
   text: string;
+  dueDate: string; // Añadir la propiedad dueDate
 }
 
 const useTodos = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
-  const [editing, setEditing] = useState<EditingState>({ id: null, text: '' });
+  const [editing, setEditing] = useState<EditingState>({ id: null, text: '', dueDate: '' });
 
   useEffect(() => {
     const savedTodos = sessionStorage.getItem('todos');
@@ -28,7 +30,7 @@ const useTodos = () => {
 
   const addTodo = (text: string) => {
     if (text.trim() === '') return;
-    const newTodoItem: Todo = { id: Date.now(), text, completed: false }; // Inicializar completed en false
+    const newTodoItem: Todo = { id: Date.now(), text, completed: false, dueDate: '' }; // Inicializar dueDate en ''
     setTodos([...todos, newTodoItem]);
   };
 
@@ -36,13 +38,13 @@ const useTodos = () => {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
-  const startEditing = (id: number, text: string) => {
-    setEditing({ id, text });
+  const startEditing = (id: number, text: string, dueDate: string) => {
+    setEditing({ id, text, dueDate });
   };
 
   const submitEdit = (id: number) => {
-    setTodos(todos.map(todo => (todo.id === id ? { ...todo, text: editing.text } : todo)));
-    setEditing({ id: null, text: '' });
+    setTodos(todos.map(todo => (todo.id === id ? { ...todo, text: editing.text, dueDate: editing.dueDate } : todo)));
+    setEditing({ id: null, text: '', dueDate: '' });
   };
 
   const toggleComplete = (id: number) => {

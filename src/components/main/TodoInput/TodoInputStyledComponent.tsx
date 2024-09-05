@@ -6,10 +6,13 @@ const TodoInputStyledComponent = styled.div`
   .addBtn{
     background-color: ${colors.secondaryColor};
     color: ${colors.textColor};
+    box-shadow:  11px 11px 22px #bebebe,
+                -11px -11px 22px #ffffff;
     transition: all 0.3s;
     
     &:hover{
-      background-color: ${colors.tertiaryColor};
+      /* background-color: ${colors.tertiaryColor}; */
+      background: red;
     }
     &:active {
       transform: scale(0.98);
