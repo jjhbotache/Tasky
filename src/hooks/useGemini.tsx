@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GenerateContentResult, GenerativeModel, GoogleGenerativeAI } from "@google/generative-ai";
 
-const getSuggestionsPrompt = (text:string)=>`You are a todo list app. The user is writting this: ${text.trim()}, generate a list of suggestions for the user to choose from. in a JSON format like this ["${text.trim()}suggestion1","${text.trim()} sugestion2"]`
+const getSuggestionsPrompt = (text:string)=>`You are a todo list app. The user is writting this: ${text.trim()}, generate a list of suggestions for the user to choose from. in a JSON format like this ["${text.trim()}_____","${text.trim()}_____"]`
 
 
 const useGemini = () => {

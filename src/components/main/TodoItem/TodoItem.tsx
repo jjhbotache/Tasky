@@ -1,16 +1,14 @@
 import React from 'react';
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Checkbox } from "@/components/ui/checkbox"
-import { Check, Edit2, Trash2 } from "lucide-react"
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Check, Edit2, Trash2 } from "lucide-react";
 import TodoItemStyledComponent from './TodoItemStyledComponent';
 
 interface TodoItemProps {
   id: number;
   text: string;
   completed: boolean;
-  isEditing: boolean;
-  editingText: string;
   onEdit: (id: number, text: string) => void;
   onRemove: (id: number) => void;
   onSave: (id: number) => void;
@@ -23,8 +21,6 @@ const TodoItem: React.FC<TodoItemProps> = ({
   id,
   text,
   completed,
-  isEditing,
-  editingText,
   onEdit,
   onRemove,
   onSave,
@@ -39,32 +35,14 @@ const TodoItem: React.FC<TodoItemProps> = ({
         onCheckedChange={() => onToggle(id)}
         className="mr-2"
       />
-      {isEditing ? (
-        <>
-          <Input
-            type="text"
-            value={editingText}
-            onChange={(e) => onChange(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') onSave(id);
-              if (e.key === 'Escape') onCancel();
-            }}
-            className="flex-grow mr-2 bg-white text-gray-800"
-          />
-          <Button variant="ghost" size="icon" onClick={() => onSave(id)} className='animatedBtn'>
-            <Check className="h-5 w-5 text-green-500" />
-          </Button>
-        </>
-      ) : (
-        <>
-          <span className={`flex-grow ${completed ? 'line-through text-gray-500' : 'text-gray-800'}`}>
-            {text}
-          </span>
-          <Button variant="ghost" size="icon" onClick={() => onEdit(id, text)} className="animatedBtn" >
-            <Edit2 className="h-5 w-5 text-gray-500" />
-          </Button>
-        </>
-      )}
+      <div className="flex flex-col w-full">
+        {/* show the name and date */}
+        <span className={`text-lg ${completed ? 'line-through' : ''}`}>{text}</span>
+        <span className="text -sm text-gray-500">Due date: {new Date().toLocaleDateString()}</span>
+      </div>
+      <Button variant="ghost" size="icon" onClick={() => onEdit(id, text)} className="animatedBtn">
+        <Edit2 className="h-5 w-5 text-gray-500" />
+      </Button>
       <Button variant="ghost" size="icon" onClick={() => onRemove(id)} className='animatedBtn'>
         <Trash2 className="h-5 w-5 text-red-500" />
       </Button>

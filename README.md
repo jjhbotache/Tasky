@@ -28,6 +28,8 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [ ] order task function.
 - [ ] schedule function.
 
+- [ ] add tutorial
+
 - [ ] tags crud
 - [ ] autoadd tags from the created.
 - [ ] settings and tags editor.
