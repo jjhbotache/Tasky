@@ -7,7 +7,6 @@ import { colors } from '@/constants/styleConstants';
 import useGemini from '@/hooks/useGemini';
 import useDebounce from '@/hooks/useDebounce';
 import levensteinDistance from '@/helpers/levensteinDistance';
-import { log } from 'console';
 import { toast } from 'react-toastify';
 
 interface TodoInputProps {
