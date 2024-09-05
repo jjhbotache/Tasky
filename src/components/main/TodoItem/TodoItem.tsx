@@ -36,9 +36,12 @@ const TodoItem: React.FC<TodoItemProps> = ({
         className="mr-2"
       />
       <div className="flex flex-col w-full">
-        {/* show the name and date */}
         <span className={`text-lg ${completed ? 'line-through' : ''}`}>{text}</span>
-        <span className="text -sm text-gray-500">Due date: {new Date().toLocaleDateString()}</span>
+        <Input
+          type="date"
+          className="mt-2"
+          disabled={true}
+        />
       </div>
       <Button variant="ghost" size="icon" onClick={() => onEdit(id, text)} className="animatedBtn">
         <Edit2 className="h-5 w-5 text-gray-500" />
