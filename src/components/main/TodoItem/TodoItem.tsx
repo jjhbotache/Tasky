@@ -33,7 +33,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
   onToggle,
 }) => {
   return (
-    <TodoItemStyledComponent className="flex flex-grow items-center bg-gray-100 p-3 rounded-md ">
+    <TodoItemStyledComponent className="flex flex-grow items-center bg-gray-100 p-3 rounded-md gap-2">
       <Checkbox
         checked={completed}
         onCheckedChange={() => onToggle(id)}
@@ -51,7 +51,7 @@ const TodoItem: React.FC<TodoItemProps> = ({
             }}
             className="flex-grow mr-2 bg-white text-gray-800"
           />
-          <Button variant="ghost" size="icon" onClick={() => onSave(id)}>
+          <Button variant="ghost" size="icon" onClick={() => onSave(id)} className='animatedBtn'>
             <Check className="h-5 w-5 text-green-500" />
           </Button>
         </>
@@ -60,12 +60,12 @@ const TodoItem: React.FC<TodoItemProps> = ({
           <span className={`flex-grow ${completed ? 'line-through text-gray-500' : 'text-gray-800'}`}>
             {text}
           </span>
-          <Button variant="ghost" size="icon" onClick={() => onEdit(id, text)} className="mr-2">
+          <Button variant="ghost" size="icon" onClick={() => onEdit(id, text)} className="animatedBtn" >
             <Edit2 className="h-5 w-5 text-gray-500" />
           </Button>
         </>
       )}
-      <Button variant="ghost" size="icon" onClick={() => onRemove(id)}>
+      <Button variant="ghost" size="icon" onClick={() => onRemove(id)} className='animatedBtn'>
         <Trash2 className="h-5 w-5 text-red-500" />
       </Button>
     </TodoItemStyledComponent>

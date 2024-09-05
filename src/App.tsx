@@ -1,20 +1,13 @@
 import { ToastContainer } from "react-toastify";
 import Main from "./pages/Main";
+import 'react-toastify/dist/ReactToastify.min.css';
 
 function App() {
-  // return <h1 className="text-9xl">App</h1>;
   return <>
-  <ToastContainer
-  position="top-right"
-  autoClose={3000}
-  hideProgressBar={false}
-  newestOnTop={false}
-  closeOnClick
-  rtl={false}
-  draggable
-  />
+    <ToastContainer
+      autoClose={2000}
+    />
     <Main />
-  <ToastContainer />
   </>;
 }
 

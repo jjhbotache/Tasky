@@ -5,7 +5,7 @@ import TodoItem from '../TodoItem/TodoItem';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import TodoListStyledComponent from './TodoStyledComponent';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+
 
 const TodoList: React.FC = () => {
   const {
@@ -29,6 +29,8 @@ const TodoList: React.FC = () => {
     }
     addTodo(text);
     toast.success('Todo added successfully!');
+    
+    
     imgControls.start({
       rotateY: 360,
       transition: { duration: 0.6, ease: "easeInOut" },
@@ -61,11 +63,10 @@ const TodoList: React.FC = () => {
     <TodoListStyledComponent 
       className="max-w-md w-full mx-auto bg-white rounded-xl shadow-lg gap-2"
       animate={{
-        height: todos.length > 0 ? "85vh" : "250px",
+        height: todos.length > 0 ? "80vh" : "250px",
         transition: { duration: 0.6, ease: "easeInOut" },
       }}
       >
-      <ToastContainer />
       <div className="header
       px-4 pb-1
       sticky top-0 bg-primary backdrop-blur-10 pt-2
