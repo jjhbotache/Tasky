@@ -22,12 +22,12 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [✅] add flavicon.
 - [✅] add some animations.
 - [✅] add toasts.
+- [ ] autocompletation with Geimini.
+- [ ] autoadd tags.
 - [ ] order edit modal.
 - [ ] order todo function.
 - [ ] schedule function.
 - [ ] settings and tags editor.
-- [ ] autocompletation with Geimini.
-- [ ] autoadd tags.
 
 
 

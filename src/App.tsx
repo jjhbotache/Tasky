@@ -1,4 +1,4 @@
-import { Bounce, ToastContainer } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import Main from "./pages/Main";
 
 function App() {
@@ -12,9 +12,6 @@ function App() {
   closeOnClick
   rtl={false}
   draggable
-  pauseOnHover
-  theme="light"
-  transition={Bounce}
   />
     <Main />
   <ToastContainer />

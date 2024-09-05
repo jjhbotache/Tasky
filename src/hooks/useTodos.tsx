@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 interface Todo {
   id: number;
   text: string;
-  completed: boolean; // Añadir la propiedad completed
+  completed: boolean;
 }
 
 interface EditingState {
