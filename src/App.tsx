@@ -6,6 +6,7 @@ function App() {
   return <>
     <ToastContainer
       autoClose={2000}
+      pauseOnHover={false}
     />
     <Main />
   </>;

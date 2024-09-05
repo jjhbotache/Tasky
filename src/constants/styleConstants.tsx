@@ -5,7 +5,7 @@ const colors = {
   tertiaryColor: '#c8d5b9',
   quaternaryColor: '#faf3dd',
 
-  textColor : '#0b3820'
+  textColor : '#0d4d2b'
 };
 
 

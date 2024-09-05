@@ -4,7 +4,7 @@ import TodoInput from '../TodoInput/TodoInput';
 import TodoItem from '../TodoItem/TodoItem';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import TodoListStyledComponent from './TodoStyledComponent';
-import { ToastContainer, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 
 
 const TodoList: React.FC = () => {
@@ -23,10 +23,7 @@ const TodoList: React.FC = () => {
 
   const handleAddTodo = (text: string) => {
     toast.dismiss();
-    if (!text) {
-      toast.error('Please enter a todo!');
-      return;
-    }
+    if (!text) return; 
     addTodo(text);
     toast.success('Todo added successfully!');
     
