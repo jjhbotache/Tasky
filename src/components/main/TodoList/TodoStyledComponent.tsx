@@ -1,16 +1,18 @@
 import styled from 'styled-components';
-import {colors} from '@/constants/styleConstants';
+import { motion } from 'framer-motion';
+import { colors } from '@/constants/styleConstants';
 
-const TodoListStyledComponent = styled.div`
+const TodoListStyledComponent = styled(motion.div)`
   background: ${colors.primaryColor};
+  color: ${colors.textColor};
   box-shadow:  1.2em 1.2em 2.2em #8b8b8b,
               -1.2em -1.2em 2.2em #ffffff;
 
-  max-height: 90vh;
+  height: clamp(800px, auto, 90vh);
   overflow-y: auto;
   /* hide the scroll bar */
-  scrollbar-width: none;
-  --webkit-scrollbar-width: none;
+  scrollbar-width: thin;
+  --webkit-scrollbar-width: thin;
 
 
   .header {

@@ -18,12 +18,18 @@ const TodoList: React.FC = () => {
   } = useTodos();
 
   return (
-    <TodoListStyledComponent className="max-w-md w-full mx-auto pb-4 bg-white rounded-xl shadow-lg max-h-80 relative scr">
+    <TodoListStyledComponent 
+      className="max-w-md w-full mx-auto pb-4 bg-white rounded-xl shadow-lg relative scr"
+      animate={{
+        height: todos.length > 0 ? "85vh" : "",
+        transition: { duration: 0.6, ease: "easeInOut" },
+      }}
+      >
       <div className="header
       px-4 pb-1
       sticky top-0 bg-primary backdrop-blur-10 pt-2
       ">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Cool Todo List</h1>
+        <h1 className="text-3xl font-bold mb-6 text-center">Cool Todo List</h1>
         <TodoInput onAdd={addTodo} />
       </div>
       <ul className='flex flex-col gap-2 px-4'>

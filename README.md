@@ -19,6 +19,8 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [✅] Add branding colors.
 - [✅] Integrate ~~Material UI~~ shadcn with tailwind.
 - [✅] Make the application responsive.
+- [ ] add flavicon.
+- [ ] add some animations.
 - [ ] order edit modal.
 - [ ] order todo function.
 - [ ] schedule function.

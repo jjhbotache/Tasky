@@ -24,11 +24,11 @@ const TodoInput: React.FC<TodoInputProps> = ({ onAdd }) => {
         type="text"
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
-        onKeyPress={(e) => e.key === 'Enter' && handleAdd()}
+        onKeyUpCapture={(e) => e.key === 'Enter' && handleAdd()}
         placeholder="Add a new todo"
         className="flex-grow mr-2 bg-gray-100  text-gray-800 rounded-lg focus-visible:outline-none"
       />
-      <Button onClick={handleAdd} className="bg-gray-800 text-white hover:bg-gray-700 rounded-lg">
+      <Button onClick={handleAdd} className="bg-gray-800 text-white hover:bg-gray-700 rounded-lg addBtn">
         <PlusCircle className="h-5 w-5 mr-2" />
         Add
       </Button>

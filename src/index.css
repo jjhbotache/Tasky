@@ -14,6 +14,6 @@ html,body,#root{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f3f4f6;
+  background-color: #e7fff7;
   padding: 10px;
 }
