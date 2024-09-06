@@ -29,11 +29,9 @@ function useTodos (){
 
   useEffect(() => {
     sessionStorage.setItem('todos', JSON.stringify(tasks));
-
   }, [tasks]);
 
   const addTodo = (name: string, dueDate: string) => {
-    console.log('addTodo', name, dueDate);    
     const newTodoItem: Todo = {
       id: tasks.length ? tasks[tasks.length - 1].id + 1 : 1,
       text: name.trim(),
