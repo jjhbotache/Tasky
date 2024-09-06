@@ -22,13 +22,13 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [✅] add flavicon.
 - [✅] add some animations.
 - [✅] add toasts.
-- [] autocompletation with Geimini.
-- [] allow completation and more functions in phone.
+- [✅] autocompletation with Geimini.
+- [✅] allow completation and more functions in phone.
 - [✅] solve date show bug
 - [✅] when clicked, after a task is added, writes the best suggestion
 - [✅] task edit modal.
+- [✅] schedule function.
 - [ ] order task function.
-- [ ] schedule function.
 
 - [ ] add tutorial
 

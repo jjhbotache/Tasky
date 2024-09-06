@@ -4,6 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import useTodos, { PseudoTodo } from '@/hooks/useTodos';
 import { toast } from 'react-toastify';
+import PseudoInput from '@/components/global/PseudoInput/PseudoInput';
+import useGemini from '@/hooks/useGemini';
+import useDebounce from '@/hooks/useDebounce';
+import levensteinDistance from '@/helpers/levensteinDistance';
 
 interface TaskEditorProps {
   isModalOpen: boolean;
@@ -21,6 +25,20 @@ const defaultTask =(id:null|number=null)=>({
 function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
   const { addTodo, updateTodo, getTodo } = useTodos();
   const [taskInEditor, setTaskInEditor] = useState<PseudoTodo>(defaultTask(taskId));
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
+  const [suggestionIndex, setSuggestionIndex] = useState<number>(-1);
+  const { getSuggestions } = useGemini();
+
+  const debouncedGetSuggestions = useDebounce(()=>{
+    setLoadingSuggestions(true);
+    getSuggestions(taskInEditor.text).then((suggestions) => {
+      const orderedSuggestions = suggestions.sort((a, b) => levensteinDistance(a, taskInEditor.text) - levensteinDistance(b, taskInEditor.text));
+      setSuggestions(orderedSuggestions);
+      setSuggestionIndex(0);
+      setLoadingSuggestions(false);
+    });
+  }, 500);
 
   // create a use effect to retrive info if taskId is not null
   useEffect(() => {
@@ -29,6 +47,11 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
     }
   }, [taskId]);
 
+  useEffect(() => { 
+    if (taskInEditor.text.trim() !== '') {
+      debouncedGetSuggestions();
+    }
+  }, [taskInEditor.text]);
 
   const handleSave = () => {
     if(taskInEditor.text.trim() === ''){
@@ -59,16 +82,16 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="relative">
-            <Input
-              id="taskName"
-              value={taskInEditor.text}
-              onChange={(e) => setTaskInEditor({ ...taskInEditor, text: e.target.value })}
-              placeholder="Task name"
-              className="w-full"
-              autoComplete='off'
-            />
-          </div>
+          <PseudoInput
+            placeholder='Task name'
+            suggestion={suggestionIndex !== -1 ? suggestions[suggestionIndex] : ''}
+            value={taskInEditor.text}
+            loading={loadingSuggestions}
+            onChange={(e) => setTaskInEditor({ ...taskInEditor, text: e.target.value })}
+            onNextSuggestion={() => setSuggestionIndex((prev) => suggestions[prev + 1] ? prev + 1 : 0)}
+            onPrevSuggestion={() => setSuggestionIndex((prev) => suggestions[prev - 1] ? prev - 1 : suggestions.length - 1)}
+            onAcceptSuggestion={() => {suggestionIndex !== -1 && !!suggestions[suggestionIndex] && setTaskInEditor({ ...taskInEditor, text: suggestions[suggestionIndex] })}}
+          />
           <div className="grid grid-cols-4 items-center gap-4">
             <Input
               id="dueDate"
