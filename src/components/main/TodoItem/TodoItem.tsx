@@ -23,6 +23,8 @@ function TodoItem({ id, onEdit }: TodoItemProps){
   };
 
   const onRemove = (id: number) => {
+    console.log('removing todo', id);
+    
     removeTodo(id);
   };
 

@@ -6,10 +6,9 @@ import { Todo } from "./hooks/useTodos";
 import { createContext, useState } from "react";
 
 
-export const TodoContext = createContext<{
-  tasks: Todo[];
-  setTasks: (tasks: Todo[]) => void;
-}>({ tasks: [], setTasks: () => {} });
+export const TodoContext = createContext<{ tasks: Todo[]; setTasks: (tasks: Todo[]) => void; }>(
+  { tasks: [], setTasks: () => {} }
+);
 
 function App() {
   const [tasks, setTasks] = useState<Todo[]>( JSON.parse(sessionStorage.getItem('todos') || '[]'));

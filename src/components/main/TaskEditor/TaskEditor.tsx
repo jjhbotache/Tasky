@@ -54,6 +54,8 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
   }, [taskInEditor.text]);
 
   const handleSave = () => {
+    console.log('saving task', taskInEditor);
+    
     if(taskInEditor.text.trim() === ''){
       toast.error('Task name cannot be empty');
       return;

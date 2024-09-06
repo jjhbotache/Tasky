@@ -23,12 +23,32 @@ function useTodos (){
   useEffect(() => {
     const savedTodos = sessionStorage.getItem('todos');
     if (savedTodos) {
+      
       setTasks(JSON.parse(savedTodos));
+      console.log("saving tasks from on mount useTodos useEffect", JSON.parse(savedTodos));
     }
   }, []);
 
   useEffect(() => {
-    sessionStorage.setItem('todos', JSON.stringify(tasks));
+    // sync
+
+    if (tasks.length === 0) {
+      sessionStorage.removeItem('todos');
+      console.log('removed todos');
+      return;
+    }else{
+      // if are different (sessionStorage and tasks)
+      if (JSON.stringify(tasks) === sessionStorage.getItem('todos')) {
+        console.log('no need to save todos, are the same');
+        return;
+      }else{
+        sessionStorage.setItem('todos', JSON.stringify(tasks));
+        console.log('saved todos', tasks);
+      }
+
+    }
+    
+    // console.log('saved todos', tasks);    
   }, [tasks]);
 
   const addTodo = (name: string, dueDate: string) => {
@@ -39,6 +59,8 @@ function useTodos (){
       completed: false,
     }
     setTasks([...tasks, newTodoItem]);
+    console.log('added todo', newTodoItem);
+    
   };
 
   const removeTodo = (id: number) => {
