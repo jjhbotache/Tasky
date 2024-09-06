@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { colors } from '@/constants/styleConstants';
 
 const TodoListStyledComponent = styled(motion.div)`
+  width: clamp(200px, 95%, 400px);
   background: ${colors.primaryColor};
   color: ${colors.textColor};
   box-shadow:  1.2em 1.2em 2.2em #8b8b8b,

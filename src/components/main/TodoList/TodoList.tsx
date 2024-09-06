@@ -52,7 +52,7 @@ export default function TodoList() {
             }}
             exit={{ opacity: 0, y: -10 }}
             layout
-            className="flex items-center bg-gray-100 dark:bg-gray-700 p-3 rounded-md mb-2"
+            className="flex items-center bg-gray-100 dark:bg-gray-700 p-3 rounded-md mb-2 overflow-hidden"
           >
             <TodoItem
               key={task.id}
@@ -68,7 +68,7 @@ export default function TodoList() {
       {tasks.length === 0 && <p className="text-center text-gray-600 mt-4">No tasks yet. Add one with the button below!</p>}
 
       <Button
-        className="fixed bottom-6 right-6 rounded-full w-14 h-14 addBtn"
+        className="fixed bottom-6 right-6 rounded-full w-14 h-14 addBtn z-20"
         onClick={() => setOnEditorTask(null)}
       >
         <PlusCircle className="h-6 w-6" />

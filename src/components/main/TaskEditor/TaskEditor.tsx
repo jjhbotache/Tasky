@@ -107,14 +107,14 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
           <DialogDescription>
             {taskInEditor.id !== null ? 'Edit the task details' : 'Add a new task with a due date'}
           </DialogDescription>
-          <div className='text-gray-500 text-left'>
+          <div className='text-gray-400 text-left font-thin text-sm'>
             <ul className='list-disc ml-6'>
               <li>swipe or press the arrow down or up to see more suggestions</li>
               <li>press enter or double tap to accept a suggestion</li>
             </ul>
           </div>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-4 py-4 ">
           {/* input */}
           <div>
             <PseudoInput

@@ -14,10 +14,9 @@
 .taskImg{
   position: absolute;
   object-fit: cover;
-  right: -5%;
-  bottom: -5%;
-
-  
+  right: 0%;
+  bottom: 0%;
+  min-height: 300px;  
 }
 .imgContainer::after{
   content: '';

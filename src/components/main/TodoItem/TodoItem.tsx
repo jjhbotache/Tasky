@@ -7,7 +7,7 @@ import useTodos from '@/hooks/useTodos';
 
 interface TodoItemProps {
   id: number;
-  onEdit: (id: number, text: string, dueDate: string) => void;
+  onEdit: (id: number) => void;
 }
 
 function TodoItem({ id, onEdit }: TodoItemProps){
@@ -27,27 +27,43 @@ function TodoItem({ id, onEdit }: TodoItemProps){
   };
 
   return (
-    <TodoItemStyledComponent className="flex flex-grow items-center bg-gray-100 p-3 rounded-md gap-2 flex-wrap w-full">
-      <Checkbox
-        checked={completed}
-        onCheckedChange={() => onToggle(id)}
-        className="mr-2"
-      />
-      <div className="flex flex-col w-full">
-        <span className={`text-lg  ${completed ? 'line-through' : ''}  truncate`}>{text}</span>
-        <Input
-          type="date"
-          value={dueDate}
-          className="mt-2"
-          disabled={true}
-        />
+    <TodoItemStyledComponent className="flex flex-grow items-center bg-gray-100 p-3 rounded-md gap-2 flex-wrap w-full relative overflow-hidden">
+      <div className="bgImgContainer">
+        <img src={image} alt="task image"/>
       </div>
-      <Button variant="ghost" size="icon" onClick={() => onEdit(id, text, dueDate)} className="animatedBtn">
-        <Edit2 className="h-5 w-5 text-gray-500" />
-      </Button>
-      <Button variant="ghost" size="icon" onClick={() => onRemove(id)} className='animatedBtn'>
-        <Trash2 className="h-5 w-5 text-red-500" />
-      </Button>
+      <div className="z-10 w-full">
+        <div className="flex w-full justify-start items-center">
+          <Checkbox
+            checked={completed}
+            onCheckedChange={() => onToggle(id)}
+            className="mr-2"
+          />
+          <span className={`text-lg  ${completed ? 'line-through' : ''}  truncate`}>{text}</span>
+        </div>
+        {/* date */}
+        <div className="flex flex-col w-full">
+          <Input
+            type="date"
+            value={dueDate}
+            className="mt-2 bg-slate-100"
+            disabled={true}
+            onClick={(e) => {
+              e.preventDefault();
+              onEdit(id);
+
+            }}
+          />
+        </div>
+        {/* btns */}
+        <div className="flex w-full justify-end">
+          <Button variant="ghost" size="icon" onClick={() => onEdit(id)} className="animatedBtn">
+            <Edit2 className="h-5 w-5 text-gray-500" />
+          </Button>
+          <Button variant="ghost" size="icon" onClick={() => onRemove(id)} className='animatedBtn'>
+            <Trash2 className="h-5 w-5 text-red-500" />
+          </Button>
+        </div>
+      </div>
     </TodoItemStyledComponent>
   );
 };
