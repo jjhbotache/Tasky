@@ -26,7 +26,7 @@ export default function TodoList() {
   
   
   return (
-    <TodoListStyledComponent  animate={{height: tasks.length > 0 ? "90vh" : "150px",}} transition={{ duration: .5 }} >
+    <TodoListStyledComponent  animate={{height: tasks.length > 0 ? "90vh" : "150px",}} transition={{ duration: .5, ease:"easeInOut" }} >
       <div className="w-full p-4">
       {/* header */}
       <div className="flex w-full justify-center gap-4">
