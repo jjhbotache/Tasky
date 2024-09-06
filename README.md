@@ -29,7 +29,7 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [✅] task edit modal.
 - [✅] schedule function.
 -------------------------------
-- [ ] add pixabay
+- [✅] add pixabay
 - [ ] fix some ui/ux things
 -------------------------------
 - [ ] add tutorial
