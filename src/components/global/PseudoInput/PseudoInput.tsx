@@ -1,7 +1,6 @@
-import { colors } from '@/constants/styleConstants';
-import { motion } from 'framer-motion';
-import styled, { keyframes, css } from 'styled-components';
+import { PseudoInputStyledComponent } from "./PseudoInputStyledComponent";
 
+// Define the props for the PseudoInput component
 interface PseudoInputProps {
   placeholder: string;
   suggestion: string;
@@ -14,124 +13,52 @@ interface PseudoInputProps {
 }
 
 const dragUmbral = 2;
-export default function PseudoInput({ placeholder, suggestion, value, loading, onChange, onNextSuggestion, onPrevSuggestion, onAcceptSuggestion }: PseudoInputProps) {
 
+export default function PseudoInput({ placeholder, suggestion, value, loading, onChange, onNextSuggestion, onPrevSuggestion, onAcceptSuggestion }: PseudoInputProps) {
 
   const handleDrag = (_: MouseEvent | TouchEvent | PointerEvent, info: any) => {
     if (info.delta.y < dragUmbral) {
-      onNextSuggestion();
+      onNextSuggestion(); 
     } else if (info.delta.y > dragUmbral) {
-      onPrevSuggestion();
+      onPrevSuggestion(); 
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      onAcceptSuggestion();
+      onAcceptSuggestion(); 
     } else if (e.key === 'ArrowDown') {
-      onNextSuggestion();
+      onNextSuggestion(); 
     } else if (e.key === 'ArrowUp') {
-      onPrevSuggestion();
+      onPrevSuggestion(); 
     }
-
   }
 
   return (
-    <PseudoInputContainer
+    <PseudoInputStyledComponent
       className='pseudo-input'
-      drag="y"
-      dragConstraints={{ top: 5, left: 0, right: 0, bottom: 5 }}
-      dragElastic={0.1}
-      dragSnapToOrigin
-      onDoubleClick={onAcceptSuggestion}
-      onDragEnd={handleDrag}
-      onKeyPress={handleKeyPress}
-      loading={loading ? "true" : undefined}>
+      drag="y" // Enable vertical dragging
+      dragConstraints={{ top: 5, left: 0, right: 0, bottom: 5 }} // Set drag constraints
+      dragElastic={0.1} // Set drag elasticity
+      dragSnapToOrigin // Snap back to origin after drag
+      onDoubleClick={onAcceptSuggestion} // Call onAcceptSuggestion on double click
+      onDragEnd={handleDrag} // Call handleDrag on drag end
+      onKeyPress={handleKeyPress} // Call handleKeyPress on key press
+      loading={loading ? "true" : undefined}> {/* Set loading state */}
       <input
         type="text"
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        autoComplete="off"
-        onDoubleClick={onAcceptSuggestion}
-        onKeyDownCapture={handleKeyPress}
+        value={value} // Set input value
+        onChange={onChange} // Call onChange on input change
+        placeholder={placeholder} // Set input placeholder
+        autoComplete="off" // Disable autocomplete
+        onDoubleClick={onAcceptSuggestion} // Call onAcceptSuggestion on double click
+        onKeyDownCapture={handleKeyPress} // Call handleKeyPress on key down
       />
-      {(suggestion?.startsWith(value) && !!value) && <div className='pseudo-input__suggestion text-gray-400'>{suggestion}</div>}
-      <div className='pseudo-input__text'>{value}</div>
-      {!value.length && <div className='pseudo-input__placeholder text-gray-400'>{placeholder}</div>}
-    </PseudoInputContainer>
+      {(suggestion?.startsWith(value) && !!value) && <div className='pseudo-input__suggestion text-gray-400'>{suggestion}</div>} {/* Display suggestion if it starts with the input value */}
+      <div className='pseudo-input__text'>{value}</div> {/* Display input value */}
+      {!value.length && <div className='pseudo-input__placeholder text-gray-400'>{placeholder}</div>} {/* Display placeholder if input is empty */}
+    </PseudoInputStyledComponent>
   );
 }
-
-interface PseudoInputContainerProps {
-  loading?: string;
-}
-const PseudoInputContainer = styled(motion.div)<PseudoInputContainerProps>`
-  background-color: white;
-  width: 100%;
-  padding: .5rem;
-  word-break: break-word;
-  border-radius: .6rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-  max-height: 4rem;
-
-  display: flex;
-  align-items: center;
-  position: relative;
-  ${props =>
-    props.loading == "true" &&
-    css`
-      animation: ${loadingAnimation} 1s infinite;
-    `}
-
-  input {
-    z-index: 5;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-  }
-
-  &:focus-within {
-    box-shadow: 0px 0px .5em  ${colors.primaryColor};
-  }
-
-  & .pseudo-input__text {
-    display: block;
-    position: relative;
-    pointer-events: none;
-    min-height: 1.2rem;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    z-index: 2;
-    color: ${colors.textColor};
-  }
-
-  & .pseudo-input__suggestion {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: .5rem;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
-
-
-
-  
-`;
-
-const loadingAnimation = keyframes`
-  0%,100% {
-    box-shadow: 0px 0px .5em  ${colors.secondaryColor};
-  }
-  50% {
-    box-shadow: 0px 0px .8em  ${colors.textColor};
-  }
-`;
 
 

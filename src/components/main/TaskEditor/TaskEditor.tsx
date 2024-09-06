@@ -8,33 +8,39 @@ import PseudoInput from '@/components/global/PseudoInput/PseudoInput';
 import useGemini from '@/hooks/useGemini';
 import useDebounce from '@/hooks/useDebounce';
 import levensteinDistance from '@/helpers/levensteinDistance';
-import usePixabay from '@/hooks/usePixabay';
+import usePixabay, { defaultImg } from '@/hooks/usePixabay';
 
+// Define the props for the TaskEditor component
 interface TaskEditorProps {
   isModalOpen: boolean;
   onClose: () => void;
   taskId: number | null;
 }
+
+// Get today's date in YYYY-MM-DD format
 const today = new Date().toISOString().split('T')[0].toString();
+
+// Function to create a default task object
 const defaultTask =(id:null|number=null)=>({
   id: id,
   text: '',
   completed: false,
   dueDate: today,
-  image: '',
+  image: defaultImg,
 });
 
 function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
-  const { addTodo, updateTodo, getTodo } = useTodos();
-  const [taskInEditor, setTaskInEditor] = useState<PseudoTodo>(defaultTask(taskId));
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-  const [suggestedImgs, setSuggestedImgs] = useState<string[]>([]);
-  const [imgIndex, setImgIndex] = useState<number|undefined>();
-  const [loadingSuggestions, setLoadingSuggestions] = useState(false);
-  const [suggestionIndex, setSuggestionIndex] = useState<number>(-1);
-  const { getSuggestions } = useGemini();
-  const {getImgs} = usePixabay();
+  const { addTodo, updateTodo, getTodo } = useTodos(); // Get todo functions from useTodos hook
+  const [taskInEditor, setTaskInEditor] = useState<PseudoTodo>(defaultTask(taskId)); // State for the task being edited
+  const [suggestions, setSuggestions] = useState<string[]>([]); // State for suggestions
+  const [suggestedImgs, setSuggestedImgs] = useState<string[]>([]); // State for suggested images
+  const [imgIndex, setImgIndex] = useState<number|undefined>(); // State for the index of the selected image
+  const [loadingSuggestions, setLoadingSuggestions] = useState(false); // State for loading suggestions
+  const [suggestionIndex, setSuggestionIndex] = useState<number>(-1); // State for the index of the selected suggestion
+  const { getSuggestions } = useGemini(); // Get suggestions function from useGemini hook
+  const {getImgs} = usePixabay(); // Get images function from usePixabay hook
 
+  // Debounced function to get suggestions and images
   const debouncedGetSuggestions = useDebounce(()=>{
     setLoadingSuggestions(true);
     getSuggestions(taskInEditor.text).then((suggestions) => {
@@ -56,19 +62,21 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
 
   }, 500);
 
+  // Reset all states when the component mounts
   useEffect(() => {
-    // reset all
     setTaskInEditor(defaultTask(taskId));
     setSuggestions([]);
     setSuggestedImgs([]);
   }, []);
 
+  // Set the task in editor when taskId changes
   useEffect(() => {
     if (taskId !== null && taskId !== undefined) {
       setTaskInEditor(getTodo(taskId));
     }
   }, [taskId]);
 
+  // Get suggestions and images when task text changes
   useEffect(() => { 
     if (taskInEditor.text.trim() !== '') {
       debouncedGetSuggestions();
@@ -76,18 +84,19 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
     
   }, [taskInEditor.text]);
 
+  // Set the task image when imgIndex changes
   useEffect(() => {
-    
     (imgIndex!== undefined) && setTaskInEditor({ ...taskInEditor, image: suggestedImgs[imgIndex] })
   }, [imgIndex]);
 
   const handleSave = () => {
+    // Validate task text
     if(taskInEditor.text.trim() === ''){
       toast.error('Task name cannot be empty');
       return;
     }
     
-
+    // Update or add the task
     if(taskInEditor.id !== null){
       updateTodo(taskInEditor.id, taskInEditor.text, taskInEditor.dueDate, taskInEditor.completed, taskInEditor.image)
       toast.success('Task updated');
@@ -96,12 +105,14 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
       toast.success('Task added');
     }
 
+    // Reset the task in editor and close the modal
     setTaskInEditor(defaultTask());
     onClose();
   };
   
 
   function handleOpenChange(isOpen:boolean) {
+    // Reset the task in editor and close the modal if not open
     setTaskInEditor(defaultTask());
     if (!isOpen) onClose()
   }

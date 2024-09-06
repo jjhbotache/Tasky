@@ -11,18 +11,19 @@ interface TodoItemProps {
   onEdit: (id: number) => void;
 }
 
-function TodoItem({ id, onEdit }: TodoItemProps){
-  const {tasks, updateTodo, removeTodo } = useTodos();
+function TodoItem({ id, onEdit }: TodoItemProps) {
+  const { tasks, updateTodo, removeTodo } = useTodos();
   const task = tasks.find(task => task.id === id);
-  if (!task)return null;
+  if (!task) return null;
 
+  const { text, completed, dueDate, image } = task;
 
-  const { text, completed, dueDate, image} = task;
-
+  // Toggle the completion status of the task
   const onToggle = (id: number) => {
-    updateTodo(id, text, dueDate, !completed, image);  
+    updateTodo(id, text, dueDate, !completed, image);
   };
 
+  // Remove the task
   const onRemove = (id: number) => {
     removeTodo(id);
     toast.info('Task removed');
@@ -30,21 +31,24 @@ function TodoItem({ id, onEdit }: TodoItemProps){
 
   return (
     <TodoItemStyledComponent className="flex flex-grow items-center bg-gray-100 p-3 rounded-md gap-2 flex-wrap w-full relative overflow-hidden">
+      {/* Display task image if available */}
       {
-        !!image &&  <div className="bgImgContainer">
-          <img src={image} alt="task image"/>
+        !!image && <div className="bgImgContainer">
+          <img src={image} alt="task image" />
         </div>
       }
       <div className="z-10 w-full">
         <div className="flex w-full justify-start items-center">
+          {/* Checkbox to toggle task completion */}
           <Checkbox
             checked={completed}
             onCheckedChange={() => onToggle(id)}
             className="mr-2"
           />
-          <span className={`text-lg  ${completed ? 'line-through' : ''}  truncate`}>{text}</span>
+          {/* Task text */}
+          <span className={`text-lg ${completed ? 'line-through' : ''} truncate`}>{text}</span>
         </div>
-        {/* date */}
+        {/* Due date input */}
         <div className="flex flex-col w-full">
           <Input
             type="date"
@@ -53,11 +57,10 @@ function TodoItem({ id, onEdit }: TodoItemProps){
             onClick={(e) => {
               e.preventDefault();
               onEdit(id);
-
             }}
           />
         </div>
-        {/* btns */}
+        {/* Edit and remove buttons */}
         <div className="flex w-full justify-end">
           <Button variant="ghost" size="icon" onClick={() => onEdit(id)} className="animatedBtn">
             <Edit2 className="h-5 w-5 text-gray-500" />
