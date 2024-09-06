@@ -11,8 +11,8 @@ const TodoListStyledComponent = styled(motion.div)`
   max-height: 85vh;
   overflow-y: auto;
   /* hide the scroll bar */
-  scrollbar-width: thin;
-  --webkit-scrollbar-width: thin;
+  scrollbar-width: none;
+  --webkit-scrollbar-width: none;
 
 
   .header {

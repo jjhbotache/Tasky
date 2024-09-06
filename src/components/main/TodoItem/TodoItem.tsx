@@ -1,30 +1,31 @@
-import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Edit2, Trash2 } from "lucide-react";
 import TodoItemStyledComponent from './TodoItemStyledComponent';
+import useTodos from '@/hooks/useTodos';
 
 interface TodoItemProps {
   id: number;
-  text: string;
-  completed: boolean;
-  onEdit: (id: number, text: string) => void;
-  onRemove: (id: number) => void;
-  onSave: (id: number) => void;
-  onCancel: () => void;
-  onChange: (text: string) => void;
-  onToggle: (id: number) => void;
+  onEdit: (id: number, text: string, dueDate: string) => void;
 }
 
-const TodoItem: React.FC<TodoItemProps> = ({
-  id,
-  text,
-  completed,
-  onEdit,
-  onRemove,
-  onToggle,
-}) => {
+function TodoItem({ id, onEdit }: TodoItemProps){
+  const {tasks, updateTodo, removeTodo } = useTodos();
+  const task = tasks.find(task => task.id === id);
+  if (!task)return null;
+
+
+  const { text, completed, dueDate } = task;
+
+  const onToggle = (id: number) => {
+    updateTodo(id, text, dueDate, !completed);
+  };
+
+  const onRemove = (id: number) => {
+    removeTodo(id);
+  };
+
   return (
     <TodoItemStyledComponent className="flex flex-grow items-center bg-gray-100 p-3 rounded-md gap-2">
       <Checkbox
@@ -36,11 +37,12 @@ const TodoItem: React.FC<TodoItemProps> = ({
         <span className={`text-lg ${completed ? 'line-through' : ''}`}>{text}</span>
         <Input
           type="date"
+          value={dueDate}
           className="mt-2"
           disabled={true}
         />
       </div>
-      <Button variant="ghost" size="icon" onClick={() => onEdit(id, text)} className="animatedBtn">
+      <Button variant="ghost" size="icon" onClick={() => onEdit(id, text, dueDate)} className="animatedBtn">
         <Edit2 className="h-5 w-5 text-gray-500" />
       </Button>
       <Button variant="ghost" size="icon" onClick={() => onRemove(id)} className='animatedBtn'>

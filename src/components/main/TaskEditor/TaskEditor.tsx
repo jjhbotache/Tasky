@@ -1,95 +1,92 @@
-import React, { useEffect } from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
+import  { useEffect, useState } from 'react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import useTodos, { PseudoTodo } from '@/hooks/useTodos';
+import { toast } from 'react-toastify';
 
 interface TaskEditorProps {
-  isModalOpen: boolean
-  setIsModalOpen: (isOpen: boolean) => void
-  newTodo: string
-  setNewTodo: (text: string) => void
-  newTodoDueDate: string
-  setNewTodoDueDate: (date: string) => void
-  addTodo: () => void
-  bestSuggestion: string
-  handleKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void
-  handleWheel: (e: React.WheelEvent<HTMLInputElement>) => void
-  handleSuggestionClick: () => void
-  inputRef: React.RefObject<HTMLInputElement>
-  today: string
+  isModalOpen: boolean;
+  onClose: () => void;
+  taskId: number | null;
 }
+const today = new Date().toISOString().split('T')[0].toString();
+const defaultTask =(id:null|number=null)=>({
+  id: id,
+  text: '',
+  completed: false,
+  dueDate: today,
+});
 
-const TaskEditor: React.FC<TaskEditorProps> = ({
-  isModalOpen,
-  setIsModalOpen,
-  newTodo,
-  setNewTodo,
-  newTodoDueDate,
-  setNewTodoDueDate,
-  addTodo,
-  bestSuggestion,
-  handleKeyDown,
-  handleWheel,
-  handleSuggestionClick,
-  inputRef,
-  today
-}) => {
-  // add a use effect to handle, when it's close, reset the input
-    useEffect(() => {
-    if (!isModalOpen) {
-      setNewTodo('')
-      setNewTodoDueDate('')
+function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
+  const { addTodo, updateTodo, getTodo } = useTodos();
+  const [taskInEditor, setTaskInEditor] = useState<PseudoTodo>(defaultTask(taskId));
+
+  // create a use effect to retrive info if taskId is not null
+  useEffect(() => {
+    if (taskId !== null && taskId !== undefined) {
+      setTaskInEditor(getTodo(taskId));
     }
-  }, [isModalOpen])
+  }, [taskId]);
+
+
+  const handleSave = () => {
+    if(taskInEditor.text.trim() === ''){
+      toast.error('Task name cannot be empty');
+      return;
+    }
+
+    taskInEditor.id !== null
+      ?updateTodo(taskInEditor.id, taskInEditor.text, taskInEditor.dueDate, taskInEditor.completed)
+      :addTodo(taskInEditor.text, taskInEditor.dueDate);
+    setTaskInEditor(defaultTask());
+    onClose();
+  };
+  
+
+  function handleOpenChange(isOpen:boolean) {
+    setTaskInEditor(defaultTask());
+    if (!isOpen) onClose()
+  }
 
   return (
-    <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+    <Dialog open={isModalOpen} onOpenChange={handleOpenChange}>
       <DialogContent className='dialog'>
         <DialogHeader>
-          <DialogTitle>Add New Task</DialogTitle>
+          <DialogTitle>{taskInEditor.id !== null ? 'Edit Task' : 'Add New Task'}</DialogTitle>
           <DialogDescription>
-            Add a new task with a due date
+            {taskInEditor.id !== null ? 'Edit the task details' : 'Add a new task with a due date'}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="relative">
             <Input
               id="taskName"
-              ref={inputRef}
-              value={newTodo}
-              onChange={(e) => setNewTodo(e.target.value)}
-              onClick={handleSuggestionClick}
-              onKeyDown={handleKeyDown}
-              onWheel={handleWheel}
+              value={taskInEditor.text}
+              onChange={(e) => setTaskInEditor({ ...taskInEditor, text: e.target.value })}
               placeholder="Task name"
-              className="w-full text-transparent"
+              className="w-full"
               autoComplete='off'
             />
-            <div className="absolute inset-y-0 left-0 flex items-center pointer-events-none">
-              <span className="text-gray-950 pl-3">
-                {newTodo}
-                {(bestSuggestion && !!newTodo ) && (
-                  <span className="text-gray-500">{bestSuggestion.slice(newTodo.length)}</span>
-                )}
-              </span>
-            </div>
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Input
               id="dueDate"
               type="date"
-              value={newTodoDueDate || today}
-              onChange={(e) => setNewTodoDueDate(e.target.value)}
+              value={taskInEditor.dueDate}
+              onChange={(e) => setTaskInEditor({ ...taskInEditor, dueDate: e.target.value })}
               className="col-span-3"
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={addTodo} className='addBtn'>Add Task</Button>
+          <Button type="submit" onClick={handleSave} className='addBtn'>
+            {taskInEditor.id !== null ? 'Save Changes' : 'Add Task'}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
-}
+  );
+};
 
-export default TaskEditor
+export default TaskEditor;
