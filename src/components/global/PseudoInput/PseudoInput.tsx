@@ -119,13 +119,19 @@ const PseudoInputContainer = styled(motion.div)<PseudoInputContainerProps>`
     height: 100%;
     z-index: 1;
   }
+
+
+
+  
 `;
 
 const loadingAnimation = keyframes`
   0%,100% {
-    box-shadow: 0px 0px .2em  ${colors.primaryColor};
+    box-shadow: 0px 0px .5em  ${colors.secondaryColor};
   }
   50% {
-    box-shadow: 0px 0px .7em  ${colors.secondaryColor};
+    box-shadow: 0px 0px .8em  ${colors.textColor};
   }
 `;
+
+

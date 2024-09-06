@@ -23,20 +23,18 @@ function TodoItem({ id, onEdit }: TodoItemProps){
   };
 
   const onRemove = (id: number) => {
-    console.log('removing todo', id);
-    
     removeTodo(id);
   };
 
   return (
-    <TodoItemStyledComponent className="flex flex-grow items-center bg-gray-100 p-3 rounded-md gap-2">
+    <TodoItemStyledComponent className="flex flex-grow items-center bg-gray-100 p-3 rounded-md gap-2 flex-wrap w-full">
       <Checkbox
         checked={completed}
         onCheckedChange={() => onToggle(id)}
         className="mr-2"
       />
       <div className="flex flex-col w-full">
-        <span className={`text-lg ${completed ? 'line-through' : ''}`}>{text}</span>
+        <span className={`text-lg  ${completed ? 'line-through' : ''}  truncate`}>{text}</span>
         <Input
           type="date"
           value={dueDate}

@@ -58,8 +58,6 @@ export default function TodoList() {
               key={task.id}
               id={task.id}
               onEdit={()=>{
-                console.log('setting to editor', task.id);
-                
                 setOnEditorTask(task.id)
               }}
             />

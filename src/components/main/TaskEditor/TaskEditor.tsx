@@ -54,8 +54,6 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
   }, [taskInEditor.text]);
 
   const handleSave = () => {
-    console.log('saving task', taskInEditor);
-    
     if(taskInEditor.text.trim() === ''){
       toast.error('Task name cannot be empty');
       return;
@@ -83,19 +81,28 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
           <DialogTitle>{taskInEditor.id !== null ? 'Edit Task' : 'Add New Task'}</DialogTitle>
           <DialogDescription>
             {taskInEditor.id !== null ? 'Edit the task details' : 'Add a new task with a due date'}
+            <small className="text-gray-500 ml-3 text-left">
+              <ul className='list-disc ml-6'>
+                <li>swipe or press the arrow down or up to see more suggestions</li>
+                <li>press enter or double tap to accept a suggestion</li>
+              </ul>
+            </small>
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <PseudoInput
-            placeholder='Task name'
-            suggestion={suggestionIndex !== -1 ? suggestions[suggestionIndex] : ''}
-            value={taskInEditor.text}
-            loading={loadingSuggestions}
-            onChange={(e) => setTaskInEditor({ ...taskInEditor, text: e.target.value })}
-            onNextSuggestion={() => setSuggestionIndex((prev) => suggestions[prev + 1] ? prev + 1 : 0)}
-            onPrevSuggestion={() => setSuggestionIndex((prev) => suggestions[prev - 1] ? prev - 1 : suggestions.length - 1)}
-            onAcceptSuggestion={() => {suggestionIndex !== -1 && !!suggestions[suggestionIndex] && setTaskInEditor({ ...taskInEditor, text: suggestions[suggestionIndex] })}}
-          />
+          <div>
+            <PseudoInput
+              placeholder='Task name'
+              suggestion={suggestionIndex !== -1 ? suggestions[suggestionIndex] : ''}
+              value={taskInEditor.text}
+              loading={loadingSuggestions}
+              onChange={(e) => setTaskInEditor({ ...taskInEditor, text: e.target.value })}
+              onNextSuggestion={() => setSuggestionIndex((prev) => suggestions[prev + 1] ? prev + 1 : 0)}
+              onPrevSuggestion={() => setSuggestionIndex((prev) => suggestions[prev - 1] ? prev - 1 : suggestions.length - 1)}
+              onAcceptSuggestion={() => {suggestionIndex !== -1 && !!suggestions[suggestionIndex] && setTaskInEditor({ ...taskInEditor, text: suggestions[suggestionIndex] })}}
+            />
+            <small className="text-gray-500 ml-3">AI powered suggestions!</small>
+          </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Input
               id="dueDate"
