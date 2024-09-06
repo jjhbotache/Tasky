@@ -28,12 +28,15 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [✅] when clicked, after a task is added, writes the best suggestion
 - [✅] task edit modal.
 - [✅] schedule function.
-
+-------------------------------
+- [ ] add pixabay
+- [ ] fix some ui/ux things
+-------------------------------
 - [ ] add tutorial
+- [ ] ~~tags crud~~
+- [ ] ~~autoadd tags from the created.~~
+- [ ] ~~settings and tags editor.~~
 
-- [ ] tags crud
-- [ ] autoadd tags from the created.
-- [ ] settings and tags editor.
 - [ ] add themes
 - [ ] add languages
 
