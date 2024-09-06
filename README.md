@@ -30,18 +30,9 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [✅] schedule function.
 - [✅] add pixabay
 - [✅] fix some ui/ux things
--------------------------------
 - [✅] test and solve bugs
 - [✅] set all in english
 - [✅] comment code
--------------------------------
-- [ ] ~~add tutorial~~
-- [ ] ~~tags crud~~
-- [ ] ~~autoadd tags from the created.~~
-- [ ] ~~settings and tags editor.~~
-
-- [ ] ~~add themes~~
-- [ ] ~~add languages~~
 
 
 

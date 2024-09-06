@@ -1,33 +1,34 @@
-import { useEffect, useCallback, useRef } from 'react';
+import { useEffect, useCallback, useRef } from 'react'; 
 
 /**
- * Hook que aplica un retraso a una función antes de ejecutarla.
- * @param func - La función que deseas debounciar.
- * @param delay - El tiempo de retraso en milisegundos.
- * @returns La función debounced.
+ * Hook that applies a delay to a function before executing it.
+ * @param func - The function you want to debounce.
+ * @param delay - The delay time in milliseconds.
+ * @returns The debounced function.
  */
 function useDebounce<T extends (...args: any[]) => any>(func: T, delay: number): (...args: Parameters<T>) => void {
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null); // Reference to store the timeout ID
 
+  // Memoized function that debounces the input function
   const debouncedFunction = useCallback((...args: Parameters<T>) => {
     if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutRef.current); 
     }
 
     timeoutRef.current = setTimeout(() => {
-      func(...args);
+      func(...args); 
     }, delay);
-  }, [func, delay]);
+  }, [func, delay]); 
 
   useEffect(() => {
     return () => {
       if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
+        clearTimeout(timeoutRef.current); 
       }
     };
-  }, []);
+  }, []); 
 
-  return debouncedFunction;
+  return debouncedFunction; 
 }
 
-export default useDebounce;
+export default useDebounce; 
