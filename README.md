@@ -31,7 +31,7 @@ This project is a To-Do List application built with React and TypeScript. The ap
 - [✅] add pixabay
 - [✅] fix some ui/ux things
 -------------------------------
-- [ ] test and solve bugs
+- [✅] test and solve bugs
 - [ ] set all in english
 -------------------------------
 - [ ] ~~add tutorial~~

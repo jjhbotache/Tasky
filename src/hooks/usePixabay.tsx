@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 const PIXABAY_API_KEY = (import.meta as any).env.VITE_PIXABAY_API_KEY;
+export const defaultImg = 'https://pixabay.com/get/gd3a309adf2b6ea526603206f688b32009a9c80d2a6743ebc2417c5fd877365b5830fc15b8f7304b949b55aabceafb9dfedaaa0ccf14f9872504dbc954c9e7e65_640.jpg';
 
 export default function usePixabay() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,6 +26,7 @@ export default function usePixabay() {
       imgs = response.hits.map((img: any) => img.webformatURL);
     } catch (err) {
       console.error(err);
+      imgs = [defaultImg];
     } finally {
       setLoading(false);
     }

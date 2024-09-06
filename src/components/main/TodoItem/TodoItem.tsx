@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Edit2, Trash2 } from "lucide-react";
 import TodoItemStyledComponent from './TodoItemStyledComponent';
 import useTodos from '@/hooks/useTodos';
+import { toast } from "react-toastify";
 
 interface TodoItemProps {
   id: number;
@@ -24,13 +25,16 @@ function TodoItem({ id, onEdit }: TodoItemProps){
 
   const onRemove = (id: number) => {
     removeTodo(id);
+    toast.info('Task removed');
   };
 
   return (
     <TodoItemStyledComponent className="flex flex-grow items-center bg-gray-100 p-3 rounded-md gap-2 flex-wrap w-full relative overflow-hidden">
-      <div className="bgImgContainer">
-        <img src={image} alt="task image"/>
-      </div>
+      {
+        !!image &&  <div className="bgImgContainer">
+          <img src={image} alt="task image"/>
+        </div>
+      }
       <div className="z-10 w-full">
         <div className="flex w-full justify-start items-center">
           <Checkbox
@@ -46,7 +50,6 @@ function TodoItem({ id, onEdit }: TodoItemProps){
             type="date"
             value={dueDate}
             className="mt-2 bg-slate-100"
-            disabled={true}
             onClick={(e) => {
               e.preventDefault();
               onEdit(id);

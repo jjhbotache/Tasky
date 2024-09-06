@@ -56,7 +56,13 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
 
   }, 500);
 
-  // create a use effect to retrive info if taskId is not null
+  useEffect(() => {
+    // reset all
+    setTaskInEditor(defaultTask(taskId));
+    setSuggestions([]);
+    setSuggestedImgs([]);
+  }, []);
+
   useEffect(() => {
     if (taskId !== null && taskId !== undefined) {
       setTaskInEditor(getTodo(taskId));
@@ -82,9 +88,13 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
     }
     
 
-    taskInEditor.id !== null
-      ?updateTodo(taskInEditor.id, taskInEditor.text, taskInEditor.dueDate, taskInEditor.completed, taskInEditor.image)
-      :addTodo(taskInEditor.text, taskInEditor.dueDate, taskInEditor.image);
+    if(taskInEditor.id !== null){
+      updateTodo(taskInEditor.id, taskInEditor.text, taskInEditor.dueDate, taskInEditor.completed, taskInEditor.image)
+      toast.success('Task updated');
+    }else{
+      addTodo(taskInEditor.text, taskInEditor.dueDate, taskInEditor.image);
+      toast.success('Task added');
+    }
 
     setTaskInEditor(defaultTask());
     onClose();
@@ -109,7 +119,7 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
           </DialogDescription>
           <div className='text-gray-400 text-left font-thin text-sm'>
             <ul className='list-disc ml-6'>
-              <li>swipe or press the arrow down or up to see more suggestions</li>
+              <li>press the arrow or swipe, the input, down or up to see more suggestions</li>
               <li>press enter or double tap to accept a suggestion</li>
             </ul>
           </div>
@@ -140,8 +150,8 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
             />
           </div>
           {/* image */}
-          {imgIndex ? <div className="flex items-center">
-            <img src={suggestedImgs[imgIndex]} alt="Suggested Image" className="w-16 h-16 rounded-full mr-4" />
+          {!!suggestedImgs.length ? <div className="flex items-center">
+            <img src={suggestedImgs[imgIndex||0]} alt="Suggested Image" className="w-16 h-16 rounded-full mr-4" />
             <Button onClick={() => setImgIndex(suggestedImgs[(imgIndex||0) + 1] ? (imgIndex||0) + 1 : 0 )}>
               Next Image
             </Button>

@@ -40,7 +40,9 @@ export default function TodoList() {
       </div>
       {/* tasks */}
       <AnimatePresence>
-        {tasks.map((task:Todo, index:number) => (
+        {tasks
+        .sort((a, b) => a.completed ? 1 : -1)
+        .map((task:Todo, index:number) => (
           <motion.li
             key={task.id}
             
