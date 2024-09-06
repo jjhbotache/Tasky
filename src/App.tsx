@@ -3,7 +3,7 @@ import Main from "./pages/Main";
 import 'react-toastify/dist/ReactToastify.min.css';
 import GlobalStyles from "./GlobalStyles";
 import { Todo } from "./hooks/useTodos";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 
 export const TodoContext = createContext<{

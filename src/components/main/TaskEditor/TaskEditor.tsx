@@ -58,10 +58,12 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
       toast.error('Task name cannot be empty');
       return;
     }
+    
 
     taskInEditor.id !== null
       ?updateTodo(taskInEditor.id, taskInEditor.text, taskInEditor.dueDate, taskInEditor.completed)
       :addTodo(taskInEditor.text, taskInEditor.dueDate);
+
     setTaskInEditor(defaultTask());
     onClose();
   };

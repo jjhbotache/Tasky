@@ -46,7 +46,7 @@ export default function PseudoInput({ placeholder, suggestion, value, loading, o
       onDoubleClick={onAcceptSuggestion}
       onDragEnd={handleDrag}
       onKeyPress={handleKeyPress}
-      loading={loading}>
+      loading={loading ? loading : undefined}>
       <input
         type="text"
         value={value}
@@ -64,7 +64,7 @@ export default function PseudoInput({ placeholder, suggestion, value, loading, o
 }
 
 interface PseudoInputContainerProps {
-  loading: boolean;
+  loading?: boolean;
 }
 const PseudoInputContainer = styled(motion.div)<PseudoInputContainerProps>`
   background-color: white;
