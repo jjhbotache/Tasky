@@ -467,4 +467,4 @@ html,body,#root{
 }
 
 
-`,af=w.createContext({tasks:[],setTasks:()=>{}});function Nb(){const[e,t]=w.useState(JSON.parse(sessionStorage.getItem("todos")||"[]"));return P.jsx(P.Fragment,{children:P.jsxs(af.Provider,{value:{tasks:e,setTasks:t},children:[P.jsx(bb,{}),P.jsx(LS,{autoClose:2e3,pauseOnHover:!1}),P.jsx(_b,{})]})})}$v(document.getElementById("root")).render(P.jsx(Nb,{}));
+`,af=w.createContext({tasks:[],setTasks:()=>{}});function Nb(){const[e,t]=w.useState(JSON.parse(sessionStorage.getItem("todos")||"[]"));return P.jsx(P.Fragment,{children:P.jsxs(af.Provider,{value:{tasks:e,setTasks:t},children:[P.jsx(bb,{}),P.jsx(LS,{autoClose:2e3,pauseOnHover:!1}),P.jsx(_b,{})]})})}$v(document.getElementById("root")).render(P.jsx(w.StrictMode,{children:P.jsx(Nb,{})}));
