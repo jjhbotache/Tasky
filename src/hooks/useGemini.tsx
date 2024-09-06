@@ -4,7 +4,8 @@ import { GenerateContentResult, GenerativeModel, GoogleGenerativeAI } from "@goo
 const getSuggestionsPrompt = (text:string)=>`You are a todo list app. The user is writting this: ${text.trim()}, generate a list of suggestions for the user to choose from. in a JSON format like this ["${text.trim()}_____","${text.trim()}_____"] avoid using ** or __ in the suggestions. `;
 
 
-const useGemini = () => {
+
+function useGemini (){
   const [model, setModel] = useState<null | GenerativeModel>(null);
 
   useEffect(() => {
@@ -53,6 +54,7 @@ const useGemini = () => {
       return [""];
     }
   };
+
 
   return { getSuggestions };
 };

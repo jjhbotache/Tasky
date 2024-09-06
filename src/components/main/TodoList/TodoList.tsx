@@ -10,8 +10,9 @@ import { Todo } from '@/hooks/useTodos'
 
 export default function TodoList() {
   const { tasks } = useContext(TodoContext)
-  const [onEditorTask, setOnEditorTask] = useState< undefined |null | number>() // undefined is for close, null is for add, number is for edit
+  const [onEditorTask, setOnEditorTask] = useState< undefined | null | number>() // undefined is for close, null is for add, number is for edit
   const logoControls = useAnimationControls()
+  
   
   useEffect(() => {
     logoControls.start({
@@ -23,7 +24,6 @@ export default function TodoList() {
       })
     })
   }, [tasks])
-  
   
   return (
     <TodoListStyledComponent  animate={{height: tasks.length > 0 ? "90vh" : "150px",}} transition={{ duration: .5, ease:"easeInOut" }} >

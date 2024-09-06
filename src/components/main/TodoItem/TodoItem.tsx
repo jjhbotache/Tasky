@@ -16,10 +16,10 @@ function TodoItem({ id, onEdit }: TodoItemProps){
   if (!task)return null;
 
 
-  const { text, completed, dueDate } = task;
+  const { text, completed, dueDate, image} = task;
 
   const onToggle = (id: number) => {
-    updateTodo(id, text, dueDate, !completed);
+    updateTodo(id, text, dueDate, !completed, image);  
   };
 
   const onRemove = (id: number) => {

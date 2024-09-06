@@ -8,6 +8,7 @@ import PseudoInput from '@/components/global/PseudoInput/PseudoInput';
 import useGemini from '@/hooks/useGemini';
 import useDebounce from '@/hooks/useDebounce';
 import levensteinDistance from '@/helpers/levensteinDistance';
+import usePixabay from '@/hooks/usePixabay';
 
 interface TaskEditorProps {
   isModalOpen: boolean;
@@ -20,15 +21,19 @@ const defaultTask =(id:null|number=null)=>({
   text: '',
   completed: false,
   dueDate: today,
+  image: '',
 });
 
 function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
   const { addTodo, updateTodo, getTodo } = useTodos();
   const [taskInEditor, setTaskInEditor] = useState<PseudoTodo>(defaultTask(taskId));
   const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestedImgs, setSuggestedImgs] = useState<string[]>([]);
+  const [imgIndex, setImgIndex] = useState<number|undefined>();
   const [loadingSuggestions, setLoadingSuggestions] = useState(false);
   const [suggestionIndex, setSuggestionIndex] = useState<number>(-1);
   const { getSuggestions } = useGemini();
+  const {getImgs} = usePixabay();
 
   const debouncedGetSuggestions = useDebounce(()=>{
     setLoadingSuggestions(true);
@@ -38,6 +43,17 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
       setSuggestionIndex(0);
       setLoadingSuggestions(false);
     });
+
+    getImgs(taskInEditor.text).then((imgs) => {
+      if(imgs.length === 0) {
+        setSuggestedImgs([]);
+        setImgIndex(undefined);
+      }else{
+        setSuggestedImgs(imgs);
+        setImgIndex(Math.floor(Math.random() * imgs.length));
+      }
+    })
+
   }, 500);
 
   // create a use effect to retrive info if taskId is not null
@@ -51,7 +67,13 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
     if (taskInEditor.text.trim() !== '') {
       debouncedGetSuggestions();
     }
+    
   }, [taskInEditor.text]);
+
+  useEffect(() => {
+    
+    (imgIndex!== undefined) && setTaskInEditor({ ...taskInEditor, image: suggestedImgs[imgIndex] })
+  }, [imgIndex]);
 
   const handleSave = () => {
     if(taskInEditor.text.trim() === ''){
@@ -61,8 +83,8 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
     
 
     taskInEditor.id !== null
-      ?updateTodo(taskInEditor.id, taskInEditor.text, taskInEditor.dueDate, taskInEditor.completed)
-      :addTodo(taskInEditor.text, taskInEditor.dueDate);
+      ?updateTodo(taskInEditor.id, taskInEditor.text, taskInEditor.dueDate, taskInEditor.completed, taskInEditor.image)
+      :addTodo(taskInEditor.text, taskInEditor.dueDate, taskInEditor.image);
 
     setTaskInEditor(defaultTask());
     onClose();
@@ -77,19 +99,23 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
   return (
     <Dialog open={isModalOpen} onOpenChange={handleOpenChange}>
       <DialogContent className='dialog'>
+        { taskInEditor.image && <div className='imgContainer'>
+          <img className="taskImg" src={taskInEditor.image}/>
+        </div>}
         <DialogHeader>
           <DialogTitle>{taskInEditor.id !== null ? 'Edit Task' : 'Add New Task'}</DialogTitle>
           <DialogDescription>
             {taskInEditor.id !== null ? 'Edit the task details' : 'Add a new task with a due date'}
-            <small className="text-gray-500 ml-3 text-left">
-              <ul className='list-disc ml-6'>
-                <li>swipe or press the arrow down or up to see more suggestions</li>
-                <li>press enter or double tap to accept a suggestion</li>
-              </ul>
-            </small>
           </DialogDescription>
+          <div className='text-gray-500 text-left'>
+            <ul className='list-disc ml-6'>
+              <li>swipe or press the arrow down or up to see more suggestions</li>
+              <li>press enter or double tap to accept a suggestion</li>
+            </ul>
+          </div>
         </DialogHeader>
         <div className="grid gap-4 py-4">
+          {/* input */}
           <div>
             <PseudoInput
               placeholder='Task name'
@@ -103,6 +129,7 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
             />
             <small className="text-gray-500 ml-3">AI powered suggestions!</small>
           </div>
+          {/* date */}
           <div className="grid grid-cols-4 items-center gap-4">
             <Input
               id="dueDate"
@@ -112,6 +139,15 @@ function TaskEditor({ isModalOpen, onClose, taskId, }: TaskEditorProps) {
               className="col-span-3"
             />
           </div>
+          {/* image */}
+          {imgIndex ? <div className="flex items-center">
+            <img src={suggestedImgs[imgIndex]} alt="Suggested Image" className="w-16 h-16 rounded-full mr-4" />
+            <Button onClick={() => setImgIndex(suggestedImgs[(imgIndex||0) + 1] ? (imgIndex||0) + 1 : 0 )}>
+              Next Image
+            </Button>
+          </div>:
+          <span className="text-gray-500">No images found</span>
+          }
         </div>
         <DialogFooter>
           <Button type="submit" onClick={handleSave} className='addBtn'>
