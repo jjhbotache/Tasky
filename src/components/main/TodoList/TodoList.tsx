@@ -41,7 +41,7 @@ export default function TodoList() {
       {/* Tasks */}
       <AnimatePresence>
         {tasks
-        .sort((a, b) => a.completed ? 1 : -1) // Sort tasks by completion status
+        .sort((a) => a.completed ? 1 : -1) // Sort tasks by completion status
         .map((task:Todo, index:number) => (
           <motion.li
             key={task.id}
