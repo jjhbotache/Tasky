@@ -23,7 +23,7 @@ export default function TodoList() {
         rotateY: 0,
       })
     })
-  }, [tasks])
+  }, [logoControls, tasks])
   
   return (
     <TodoListStyledComponent  animate={{height: tasks.length > 0 ? "90vh" : "150px",}} transition={{ duration: .5, ease:"easeInOut" }} >
@@ -65,7 +65,7 @@ export default function TodoList() {
           </motion.li>
         ))}
       </AnimatePresence>
-      {tasks.length === 0 && <p className="text-center text-gray-600 mt-4">No tasks yet. Add one with the button below! this is a test</p>}
+      {tasks.length === 0 && <p className="text-center text-gray-600 mt-4">No tasks yet. Add one with the button below! this is a teeeeeeest</p>}
 
       {/* add task btn */}
       <Button
